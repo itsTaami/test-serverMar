@@ -1,23 +1,17 @@
 const mongoose = require("mongoose");
 
-const restaurantSchema = new mongoose.Schema(
-  {
-    name: String,
-    location: {
-      type: {
-        type: String,
-        default: "Polygon",
-      },
-
-      coordinates: [Number],
+const restaurantSchema = new mongoose.Schema({
+  name: String,
+  location: {
+    type: {
+      type: String,
+      default: "Point",
     },
+    coordinates: [Number],
   },
-  {
-    collection: "restaurants",
-  }
-);
+});
 const restaurants = mongoose.model("Restaurant", restaurantSchema);
 
-restaurants.collection.createIndex({ geometry: "2dsphere" });
+restaurants.collection.createIndex({ location: "2dsphere" });
 
 module.exports = restaurants;
